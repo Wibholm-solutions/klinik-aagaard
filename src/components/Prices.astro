@@ -1,0 +1,54 @@
+---
+const prices = [
+  {
+    title: "Spædbørn & Småbørn",
+    duration: "ca. 30 minutter",
+    price: "575,-"
+  },
+  {
+    title: "Børn & Unge",
+    duration: "ca. 30 minutter",
+    price: "575,-"
+  },
+  {
+    title: "Voksne",
+    duration: "55 minutter",
+    price: "875,-"
+  },
+  {
+    title: "Voksne kort",
+    duration: "30 minutter",
+    price: "575,-"
+  }
+];
+---
+
+<section class="py-32 px-6 lg:px-16 bg-gradient-to-b from-warm to-cream" id="priser">
+  <div class="text-center max-w-xl mx-auto mb-20">
+    <div class="text-xs tracking-[0.2em] uppercase text-sage-dark mb-4">
+      Priser
+    </div>
+    <h2 class="font-display text-3xl md:text-4xl font-normal mb-4">
+      Priser pr. 1. januar 2025
+    </h2>
+    <p class="text-text-light">
+      Ved afbud senere end 12 timer før opkræves fuld betaling
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+    {prices.map(item => (
+      <div class="bg-white p-10 rounded-3xl text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <h3 class="font-display text-xl mb-2">
+          {item.title}
+        </h3>
+        <div class="text-sm text-text-light mb-6">
+          {item.duration}
+        </div>
+        <div class="font-display text-4xl text-sage-dark">
+          {item.price} <span class="text-base text-text-light">kr</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

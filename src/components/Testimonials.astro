@@ -1,0 +1,63 @@
+---
+const testimonials = [
+  {
+    quote: "Efter kun få behandlinger mærkede jeg en markant forskel. Spændingerne i nakken er væk, og jeg sover meget bedre.",
+    name: "Maria K.",
+    treatment: "Nakke & ryg"
+  },
+  {
+    quote: "Lisbeth har hjulpet vores lille med kolik. Hun er utrolig nænsom og professionel. Kan varmt anbefales!",
+    name: "Anne & Mikkel",
+    treatment: "Spædbarnsbehandling"
+  },
+  {
+    quote: "Jeg har kæmpet med migræne i årevis. Kraniosakral terapi har givet mig mit liv tilbage. Tak, Lisbeth!",
+    name: "Peter H.",
+    treatment: "Hovedpine & migræne"
+  }
+];
+---
+
+<section class="py-24 lg:py-32 px-6 lg:px-16 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 lg:mb-20">
+      <div class="text-xs tracking-[0.2em] uppercase text-sage-dark mb-4 flex items-center justify-center gap-4">
+        <span class="w-8 h-px bg-sage-dark"></span>
+        Hvad siger mine klienter
+        <span class="w-8 h-px bg-sage-dark"></span>
+      </div>
+      <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-normal">
+        Oplevelser fra behandlingen
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {testimonials.map(item => (
+        <div class="testimonial-card group bg-cream p-8 lg:p-10 rounded-3xl shadow-[0_5px_20px_0_rgba(0,0,0,0.05)] hover:shadow-[0_15px_50px_0_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2">
+          <!-- Quote icon -->
+          <div class="w-12 h-12 bg-sage/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-sage/30 transition-colors duration-300">
+            <svg class="w-5 h-5 text-sage-dark" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+          </div>
+
+          <!-- Quote text -->
+          <blockquote class="font-display text-lg lg:text-xl leading-relaxed text-text mb-8 italic">
+            "{item.quote}"
+          </blockquote>
+
+          <!-- Author -->
+          <div class="flex items-center gap-4 pt-6 border-t border-warm">
+            <div class="w-10 h-10 bg-sage rounded-full flex items-center justify-center text-white font-medium text-sm">
+              {item.name.charAt(0)}
+            </div>
+            <div>
+              <div class="font-medium text-text">{item.name}</div>
+              <div class="text-sm text-text-light">{item.treatment}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

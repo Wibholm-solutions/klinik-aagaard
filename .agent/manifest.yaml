@@ -1,0 +1,17 @@
+name: lisbeth-aagaard
+status: active
+type: website
+description: "Kraniosakral terapi website for Klinik Aagaard (klinikaagaard.dk)"
+
+critical_paths:
+  - src/
+  - astro.config.mjs
+  - package.json
+
+safe_to_delete:
+  - "node_modules/"
+  - "dist/"
+  - ".astro/"
+
+dependencies:
+  - caddy

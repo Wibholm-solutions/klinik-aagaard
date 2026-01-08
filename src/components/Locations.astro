@@ -1,0 +1,44 @@
+---
+const locations = [
+  {
+    name: "Roskilde",
+    address: ["Ringstedgade 32A, 1. sal", "4000 Roskilde"]
+  },
+  {
+    name: "Ringsted / Allindelille",
+    address: ["Kastrupvej 54", "4100 Ringsted"]
+  }
+];
+---
+
+<section class="py-32 px-6 lg:px-16 bg-white" id="lokationer">
+  <div class="text-center max-w-xl mx-auto mb-20">
+    <div class="text-xs tracking-[0.2em] uppercase text-sage-dark mb-4">
+      Lokationer
+    </div>
+    <h2 class="font-display text-3xl md:text-4xl font-normal mb-4">
+      Find klinikken
+    </h2>
+    <p class="text-text-light">
+      Behandling tilbydes i Roskilde og Ringsted
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto">
+    {locations.map(location => (
+      <div class="p-10 bg-cream rounded-3xl text-center">
+        <h3 class="font-display text-2xl mb-4">
+          {location.name}
+        </h3>
+        <address class="not-italic text-text-light leading-loose">
+          {location.address.map((line, i) => (
+            <>
+              {line}
+              {i < location.address.length - 1 && <br />}
+            </>
+          ))}
+        </address>
+      </div>
+    ))}
+  </div>
+</section>

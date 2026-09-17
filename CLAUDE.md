@@ -29,7 +29,7 @@ Single-page website med sektioner:
 
 ## Udvikling
 ```bash
-cd ~/projects/lisbeth-aagaard
+cd ~/projects/klinik-aagaard
 
 # Start dev server
 npm run dev

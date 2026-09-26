@@ -117,3 +117,55 @@ jobs:
             echo "- digest: \`ghcr.io/${repository}@${digest}\`"
             echo "- provenance tag: \`sha-${GITHUB_SHA}\`"
           } >> "$GITHUB_STEP_SUMMARY"
+
+  promote:
+    needs: publish
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    runs-on: [self-hosted, linux, x64, dev-pc, ci]
+    permissions:
+      contents: read
+    steps:
+      - name: Mint a short-lived cross-repository token
+        id: token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ vars.DEPLOY_APP_ID }}
+          private-key: ${{ secrets.DEPLOY_APP_PRIVATE_KEY }}
+          owner: saabendtsen
+          repositories: home-server
+          permission-contents: write
+
+      - name: Send the promotion request
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          DIGEST: ${{ needs.publish.outputs.digest }}
+        run: |
+          set -euo pipefail
+          jq -n \
+            --arg request_id "promotion-$(date -u +%Y-%m-%d)-$(printf '%04d' "$GITHUB_RUN_NUMBER")" \
+            --arg application "klinik-aagaard" \
+            --arg source_repository "$GITHUB_REPOSITORY" \
+            --arg image "ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/klinik-aagaard" \
+            --arg digest "$DIGEST" \
+            --arg source_commit "$GITHUB_SHA" \
+            --arg run "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            --arg requested_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            '{
+               event_type: "promotion-request",
+               client_payload: {
+                 request: {
+                   schema_version: 1,
+                   request_id: $request_id,
+                   application: $application,
+                   host: "homelab",
+                   source_repository: $source_repository,
+                   image: $image,
+                   digest: $digest,
+                   source_commit: $source_commit,
+                   source_workflow_run: $run,
+                   runtime_contract_version: "1.0.0",
+                   requested_at: $requested_at
+                 }
+               }
+             }' \
+            | gh api repos/saabendtsen/home-server/dispatches --input -
